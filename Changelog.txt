@@ -1,0 +1,8 @@
+                 	<0.0.1>								17.07.16									C:\Users\Tural\AndroidStudioProjects\MakeItLouder2test
+
+        -Авторизация ВК
+        -Navigation Drawer
+        -SlidingUpPanelLayout (Требуется доработка)
+        -NavigationStipBar (Требуется доработка)
+        ____________________________________________________________
+

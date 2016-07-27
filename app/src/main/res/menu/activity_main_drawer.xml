@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_select"
+            android:title="Музыка ВК" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_select"
+            android:title="Black Star Radio" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_select"
+            android:title="TOP 40" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_select"
+            android:title="Воображение закончилось" />
+    </group>
+
+    <item android:title="Поддержка">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_select"
+                android:title="ZD" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_select"
+                android:title="EDM TRAP MUSIC" />
+        </menu>
+    </item>
+
+</menu>
