@@ -1,16 +1,31 @@
 package com.shahbazly_dev.makeitlouder.Classes;
 
+import com.vk.sdk.api.model.VKApiAudio;
+
+import java.util.Locale;
+
 public class Song {
 
-    private String title, artist,duration, songUrl;
+    private String title, artist, duration, songUrl;
     private int songId;
     private int durationInSec;
     private boolean isPlaying = false;
 
-    public Song() {
+    public Song(VKApiAudio vkApiAudio) {
+        this.songId = vkApiAudio.id;
+        this.title = vkApiAudio.title;
+        this.artist = vkApiAudio.artist;
+        this.durationInSec = vkApiAudio.duration;
+        long hours = (this.durationInSec / 3600);
+        long minutes = ((this.durationInSec % 3600) / 60);
+        long seconds = (this.durationInSec % 60);
+        this.duration = this.durationInSec > 3600
+                ? String.format(Locale.getDefault(),"%02d:%02d:%02d", hours, minutes, seconds)
+                : String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        this.songUrl = vkApiAudio.url;
     }
 
-    public Song(int songId,String title, String artist, int durationInSec,String duration,String songUrl) {
+    public Song(int songId, String title, String artist, int durationInSec, String duration, String songUrl) {
         this.songId = songId;
         this.title = title;
         this.artist = artist;

@@ -20,11 +20,13 @@ public class Music_vk extends Fragment {
     NavigationTabStrip navigationTabStrip;
     FragmentPagerAdapter adapterViewPager;
 
-
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
         view = inflater.inflate(R.layout.activity_vkmusic, container, false);
 
         //Инициализация элементов экрана
