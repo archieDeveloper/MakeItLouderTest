@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,26 +25,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Playlist_fragment extends Fragment {
+public class SongListFragment extends Fragment {
 
     protected List<Song> songList = new ArrayList<>();
     protected RecyclerView recyclerView;
     protected SongsAdapter mAdapter;
     protected View view;
     protected LVCircularCD mLVCircularCD;
-    protected VKApiAudio vkApiAudio;
 
     private String title;
     private int page;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
         view = inflater.inflate(R.layout.musiclist, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mLVCircularCD = (LVCircularCD) view.findViewById(R.id.lv_circularCD);
-
 
         mAdapter = new SongsAdapter(songList);
 
@@ -53,6 +56,7 @@ public class Playlist_fragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         prepareSongData();
+        Log.d("SngLst", "onCreateView: " + page);
 /*
         recyclerView.addOnItemTouchListener(new MainActivity.RecyclerTouchListener(getActivity(),
                 recyclerView, new MainActivity.ClickListener() {
@@ -82,33 +86,50 @@ public class Playlist_fragment extends Fragment {
         title = getArguments().getString("Title");
     }
 
-    public static Playlist_fragment newInstance(int page, String title) {
-        Playlist_fragment playlist_fragment = new Playlist_fragment();
+    public static SongListFragment newInstance(int page, String title) {
+        SongListFragment songListFragment = new SongListFragment();
         Bundle args = new Bundle();
         args.putInt("Int", page);
         args.putString("Title", title);
-        playlist_fragment.setArguments(args);
-        return playlist_fragment;
+        songListFragment.setArguments(args);
+        return songListFragment;
     }
 
     private void prepareSongData() {
         mLVCircularCD.startAnim();
-        final VKRequest songsRequest = VKApi.audio().get();
+        final VKRequest songsRequest = getSongsRequest();
+        assert songsRequest != null;
         songsRequest.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
                 mLVCircularCD.stopAnim();
                 mLVCircularCD.setVisibility(View.INVISIBLE);
-                VKList<VKApiAudio> vkList = (VKList<VKApiAudio>)response.parsedModel;
+                VKList vkList = response.parsedModel instanceof VKList
+                        ? (VKList) response.parsedModel
+                        : new VKList();
                 for(int i = 0; i < vkList.size(); i++) {
-                    vkApiAudio = vkList.get(i);
+                    VKApiAudio vkApiAudio = (VKApiAudio) vkList.get(i);
                     Song song = new Song(vkApiAudio);
                     songList.add(song);
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Nullable
+    private VKRequest getSongsRequest() {
+        switch (page) {
+            case 0:
+                return VKApi.audio().getRecommendations();
+            case 1:
+                return VKApi.audio().get();
+            case 2:
+                return VKApi.audio().getPopular();
+            default:
+                return null;
+        }
     }
 }
 

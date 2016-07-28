@@ -8,6 +8,7 @@ import com.shahbazly_dev.makeitlouder.Fragment_welcome;
 import com.shahbazly_dev.makeitlouder.Playlist_fragment;
 import com.shahbazly_dev.makeitlouder.Popular_fragment;
 import com.shahbazly_dev.makeitlouder.Recomended_fragment;
+import com.shahbazly_dev.makeitlouder.SongListFragment;
 
 
 public  class MyPagerAdapter extends FragmentPagerAdapter {
@@ -25,17 +26,7 @@ public  class MyPagerAdapter extends FragmentPagerAdapter {
     // Возвращает фрагмент для отображения
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return Recomended_fragment.newInstance(0, "Page 1");
-            case 1:
-                return Playlist_fragment.newInstance(1, "Page 2");
-            case 2:
-                return Popular_fragment.newInstance(2, "Page 3");
-            default:
-                return null;
-        }
+        return SongListFragment.newInstance(position, "Page " + (position+1));
     }
-
 
 }
