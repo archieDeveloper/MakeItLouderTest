@@ -48,6 +48,6 @@ public class CircleTransformation implements Transformation {
 
     @Override
     public String key() {
-        return "circleTransformation()";
+        return "circleTransformation";
     }
 }

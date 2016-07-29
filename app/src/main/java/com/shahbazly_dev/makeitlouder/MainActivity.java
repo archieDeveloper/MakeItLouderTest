@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shahbazly_dev.makeitlouder.Classes.User;
 import com.shahbazly_dev.makeitlouder.Menu.Music_vk;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
@@ -32,7 +33,6 @@ import co.mobiwise.library.ProgressLayout;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView txt;
     Toolbar toolbar;
     DrawerLayout drawer;
     ProgressLayout progressLayout;
@@ -133,19 +133,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getUserInfo() {
-        final VKRequest username = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS,
-                "first_name,last_name,photo_100"));
+        final VKRequest username = VKApi.users().get(VKParameters.from(
+                VKApiConst.FIELDS,
+                "first_name,last_name,photo_100"
+        ));
         username.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
-                VKApiUserFull user = ((VKList<VKApiUserFull>) response.parsedModel).get(0);
-
+                VKList vkList = response.parsedModel instanceof VKList
+                        ? (VKList) response.parsedModel
+                        : new VKList();
+                User user = new User((VKApiUserFull) vkList.get(0));
                 //устанавливаем имя пользователя в TextView
-                txt = (TextView) findViewById(R.id.txt_username);
-                txt.setText(user.first_name + " " + user.last_name);
+                TextView txt = (TextView) findViewById(R.id.txt_username);
+                txt.setText(user.getFullName());
                 ImageView MenuUserProfilePhoto = (ImageView) findViewById(R.id.MenuUserProfilePhoto);
                 int avatarSize = getResources().getDimensionPixelSize(R.dimen.global_menu_avatar_size);
-                String profilePhoto = user.photo_100;
+                String profilePhoto = user.getAvatar();
                 Context context = getApplicationContext();
                 Picasso.with(context)
                         .load(profilePhoto)
