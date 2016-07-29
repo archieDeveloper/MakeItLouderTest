@@ -12,14 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ldoublem.loadingviewlib.LVCircularCD;
-import com.shahbazly_dev.makeitlouder.Classes.Song;
 import com.shahbazly_dev.makeitlouder.Adapters.SongsAdapter;
+import com.shahbazly_dev.makeitlouder.Classes.Song;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiAudio;
 import com.vk.sdk.api.model.VKList;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,24 +56,6 @@ public class SongListFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         prepareSongData();
         Log.d("SngLst", "onCreateView: " + page);
-/*
-        recyclerView.addOnItemTouchListener(new MainActivity.RecyclerTouchListener(getActivity(),
-                recyclerView, new MainActivity.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Song song = songList.get(position);
-                Toast.makeText(getActivity(),song.getArtist() + " - " + song.getTitle(),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Song song = songList.get(position);
-                Toast.makeText(getActivity(), song.getSongUrl(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }));
-        */
 
         return view;
     }
@@ -103,8 +84,10 @@ public class SongListFragment extends Fragment {
             @Override
             public void onComplete(VKResponse response) {
                 super.onComplete(response);
+
                 mLVCircularCD.stopAnim();
                 mLVCircularCD.setVisibility(View.INVISIBLE);
+
                 VKList vkList = response.parsedModel instanceof VKList
                         ? (VKList) response.parsedModel
                         : new VKList();

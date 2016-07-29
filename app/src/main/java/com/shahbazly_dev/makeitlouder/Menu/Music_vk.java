@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.shahbazly_dev.makeitlouder.Adapters.MyPagerAdapter;
+import com.shahbazly_dev.makeitlouder.Adapters.PagerAdapter;
 import com.shahbazly_dev.makeitlouder.R;
+
+import co.mobiwise.library.ProgressLayout;
 
 public class Music_vk extends Fragment {
 
@@ -19,6 +21,7 @@ public class Music_vk extends Fragment {
     ViewPager mViewPager;
     NavigationTabStrip navigationTabStrip;
     FragmentPagerAdapter adapterViewPager;
+    public ProgressLayout progressLayout;
 
     @Nullable
     @Override
@@ -32,15 +35,33 @@ public class Music_vk extends Fragment {
         //Инициализация элементов экрана
         navigationTabStrip = (NavigationTabStrip) view.findViewById(R.id.nts);
         mViewPager = (ViewPager) view.findViewById(R.id.vp);
+        progressLayout = (ProgressLayout)view.findViewById(R.id.progLay);
 
-        adapterViewPager = new MyPagerAdapter(getFragmentManager());
+        //Настройка Адаптера
+        adapterViewPager = new PagerAdapter(getFragmentManager());
         mViewPager.setAdapter(adapterViewPager);
 
-        //Настройка TabBar
+        //Настройка TabBar'а
         navigationTabStrip.setViewPager(mViewPager, 1);
         navigationTabStrip.setTitleSize(50);
-        navigationTabStrip.setTitles("I'll like it", "Playlist", "Popular");
+        navigationTabStrip.setTitles("Suggestions", "Playlist", "Popular");
         navigationTabStrip.setAnimationDuration(200);
+        navigationTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //
+            }
+        });
 
         return view;
     }

@@ -92,12 +92,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
                 }
             }
         });
+
         holder.download_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,song.getSongUrl(), Toast.LENGTH_SHORT).show();
             }
         });
+
         holder.progressLayout.setProgressLayoutListener(new ProgressLayout.ProgressLayoutListener() {
             @Override public void onProgressCompleted() {
                 holder.playStopView.setBackgroundResource(R.drawable.play);
